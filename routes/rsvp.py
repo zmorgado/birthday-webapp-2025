@@ -2,7 +2,9 @@ from fastapi import APIRouter, Form, Depends, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.templating import Jinja2Templates
-import sqlite3
+from sqlalchemy.orm import Session
+from database import SessionLocal
+from models import RSVP
 import os
 from dotenv import load_dotenv
 from datetime import datetime
@@ -13,22 +15,6 @@ templates = Jinja2Templates(directory="templates")
 # Load environment variables from .env file
 load_dotenv()
 
-# Database setup
-def init_db():
-    conn = sqlite3.connect("rsvp.db")
-    cursor = conn.cursor()
-    cursor.execute('''CREATE TABLE IF NOT EXISTS rsvps (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        name TEXT NOT NULL,
-                        dinner_confirmed BOOLEAN NOT NULL,
-                        party_confirmed BOOLEAN,
-                        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-                    )''')
-    conn.commit()
-    conn.close()
-
-init_db()
-
 security = HTTPBasic()
 
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin")
@@ -37,6 +23,14 @@ ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin")
 def verify_admin(credentials: HTTPBasicCredentials = Depends(security)):
     if credentials.password != ADMIN_PASSWORD:
         raise HTTPException(status_code=401, detail="Contraseña incorrecta")
+
+# Dependency to get the database session
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 @router.get("/rsvp", response_class=HTMLResponse)
 async def rsvp_form(request: Request, success: str = None):
@@ -47,37 +41,31 @@ async def rsvp_form(request: Request, success: str = None):
     })
 
 @router.post("/rsvp", response_class=HTMLResponse)
-async def submit_rsvp(request: Request, name: str = Form(...), attendance: str = Form(...)):
+async def submit_rsvp(request: Request, name: str = Form(...), attendance: str = Form(...), db: Session = Depends(get_db)):
     dinner_confirmed = attendance in ["dinner", "both"]
     party_confirmed = attendance in ["party", "both"]
 
-    conn = sqlite3.connect("rsvp.db")
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO rsvps (name, dinner_confirmed, party_confirmed) VALUES (?, ?, ?)", (name, dinner_confirmed, party_confirmed))
-    conn.commit()
-    conn.close()
+    rsvp = RSVP(name=name, dinner_confirmed=dinner_confirmed, party_confirmed=party_confirmed)
+    db.add(rsvp)
+    db.commit()
+    db.refresh(rsvp)
 
     # Redirect to the GET route with a success query parameter
     return RedirectResponse(url="/rsvp?success=true", status_code=303)
 
 @router.get("/admin", response_class=HTMLResponse, dependencies=[Depends(verify_admin)])
-async def admin_dashboard(request: Request):
-    conn = sqlite3.connect("rsvp.db")
-    cursor = conn.cursor()
-    cursor.execute("SELECT name, timestamp, dinner_confirmed, party_confirmed FROM rsvps")
-    rows = cursor.fetchall()
+async def admin_dashboard(request: Request, db: Session = Depends(get_db)):
+    rsvps = db.query(RSVP).all()
 
-    # Convert timestamp strings to datetime objects and format as day/month only
+    # Format data for the template
     formatted_rows = [
-        (row[0], datetime.strptime(row[1], '%Y-%m-%d %H:%M:%S').strftime('%d/%m') if row[1] else '', row[2], row[3])
-        for row in rows
+        (rsvp.name, rsvp.timestamp.strftime('%d/%m') if rsvp.timestamp else '', rsvp.dinner_confirmed, rsvp.party_confirmed)
+        for rsvp in rsvps
     ]
 
     # Calculate totals
-    total_dinner = sum(1 for row in formatted_rows if row[2])
-    total_party = sum(1 for row in formatted_rows if row[3])
-
-    conn.close()
+    total_dinner = sum(1 for rsvp in rsvps if rsvp.dinner_confirmed)
+    total_party = sum(1 for rsvp in rsvps if rsvp.party_confirmed)
 
     return templates.TemplateResponse("admin_dashboard.html", {
         "request": request,
