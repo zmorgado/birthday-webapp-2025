@@ -5,4 +5,4 @@ python-multipart
 tailwindcss
 jinja2
 sqlalchemy
-psycopg2
+psycopg2-binary

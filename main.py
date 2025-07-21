@@ -1,11 +1,22 @@
 from fastapi import FastAPI
+from config import Config
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from routes import rsvp
+from models import init_db
 import os
 import uvicorn
+from contextlib import asynccontextmanager
 
-app = FastAPI()
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_db()  # Initialize the database during startup
+    yield  # Perform any cleanup if necessary
+
+# Pass the lifespan handler to the FastAPI app
+app = FastAPI(lifespan=lifespan)
 
 # Mount static files
 app.mount("/static", StaticFiles(directory="static"), name="static")

@@ -3,10 +3,10 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
-from database import SessionLocal
-from models import RSVP
-import os
 from dotenv import load_dotenv
+from models import RSVP
+from config import Config  # Import the centralized Config class
+import os
 from datetime import datetime
 
 router = APIRouter()
@@ -15,9 +15,12 @@ templates = Jinja2Templates(directory="templates")
 # Load environment variables from .env file
 load_dotenv()
 
+from database import SessionLocal
+
 security = HTTPBasic()
 
-ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin")
+# Replace os.getenv("ADMIN_PASSWORD") with Config.ADMIN_PASSWORD
+ADMIN_PASSWORD = Config.ADMIN_PASSWORD
 
 # Dependency to verify admin credentials
 def verify_admin(credentials: HTTPBasicCredentials = Depends(security)):
