@@ -18,7 +18,7 @@ app = FastAPI(lifespan=lifespan)
 
 # Add CORS middleware
 origins = [
-    "https://your-frontend-domain.vercel.app",  # Replace with your Vercel domain
+    "https://cumplepelusa.vercel.app",  # Replace with your Vercel domain
 ]
 app.add_middleware(
     CORSMiddleware,
