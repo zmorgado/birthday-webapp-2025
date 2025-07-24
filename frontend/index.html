@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirmación de Asistencia</title>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs" defer></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center px-4 py-10 bg-black/70 bg-blend-darken">
+  <div class="w-full max-w-md bg-[#002b6c]/90 backdrop-blur-xl rounded-2xl shadow-xl p-8 space-y-6 text-white">
+    <h1 class="text-4xl font-extrabold text-white text-center">2/8 en Ostende 💙💛💙</h1>
+    <p class="text-center text-sm text-white/80">Confirmá asistencia a la cena, la fiesta o ambas</p>
+    <form id="rsvp-form" class="space-y-4">
+      <input type="text" id="name" placeholder="Nombre" class="w-full px-4 py-2 rounded" required />
+      <select id="attendance" class="w-full px-4 py-2 rounded">
+        <option value="dinner">Cena</option>
+        <option value="party">Fiesta</option>
+        <option value="both">Ambas</option>
+      </select>
+      <button type="submit" class="w-full bg-yellow-400 text-[#002b6c] py-2 rounded">Enviar</button>
+    </form>
+    <script>
+      document.getElementById('rsvp-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const attendance = document.getElementById('attendance').value;
+        const response = await fetch('https://birthday-api.up.railway.app/rsvp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, dinner_confirmed: attendance === 'dinner' || attendance === 'both', party_confirmed: attendance === 'party' || attendance === 'both' })
+        });
+        if (response.ok) {
+          alert('RSVP enviado con éxito');
+        } else {
+          alert('Error al enviar RSVP');
+        }
+      });
+    </script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Administración</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center px-4 py-10 bg-black/70 bg-blend-darken">
+  <div class="w-full max-w-4xl bg-[#002b6c]/90 backdrop-blur-xl rounded-2xl shadow-2xl p-6 text-white overflow-x-auto">
+    <h1 class="text-4xl font-extrabold text-center text-white">Escritorio</h1>
+    <table id="rsvp-table" class="w-full table-auto border-collapse text-lg mt-6">
+      <thead>
+        <tr class="bg-yellow-400 text-[#002b6c] uppercase text-sm font-bold">
+          <th class="px-4 py-2">Nombre</th>
+          <th class="px-4 py-2">Cena</th>
+          <th class="px-4 py-2">Fiesta</th>
+          <th class="px-4 py-2">Timestamp</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-white/20">
+      </tbody>
+    </table>
+    <button id="reload-button" class="mt-4 bg-yellow-400 text-[#002b6c] py-2 px-4 rounded">Reload</button>
+    <script>
+      const API_BASE_URL = "https://birthday-api.up.railway.app";
+
+      async function fetchRSVPs() {
+        const tableBody = document.querySelector('#rsvp-table tbody');
+        tableBody.innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
+        try {
+          const response = await fetch(`${API_BASE_URL}/admin`, {
+            headers: { 'Authorization': 'Basic ' + btoa('admin:yourpassword') }
+          });
+          if (response.ok) {
+            const rsvps = await response.json();
+            tableBody.innerHTML = '';
+            rsvps.forEach(rsvp => {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                <td class="px-4 py-2">${rsvp.name}</td>
+                <td class="px-4 py-2">${rsvp.dinner_confirmed ? 'Sí' : 'No'}</td>
+                <td class="px-4 py-2">${rsvp.party_confirmed ? 'Sí' : 'No'}</td>
+                <td class="px-4 py-2">${new Date(rsvp.timestamp).toLocaleString()}</td>
+              `;
+              tableBody.appendChild(row);
+            });
+          } else if (response.status === 401) {
+            tableBody.innerHTML = '<tr><td colspan="4">Unauthorized: Please check your credentials.</td></tr>';
+          } else {
+            tableBody.innerHTML = '<tr><td colspan="4">Error loading data.</td></tr>';
+          }
+        } catch (error) {
+          tableBody.innerHTML = '<tr><td colspan="4">Network error. Please try again later.</td></tr>';
+        }
+      }
+
+      document.getElementById('reload-button').addEventListener('click', fetchRSVPs);
+      fetchRSVPs();
+    </script>
+  </div>
+</body>
+</html>
