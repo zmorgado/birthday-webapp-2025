@@ -63,4 +63,3 @@ async def submit_rsvp(rsvp: RSVPRequest, db: Session = Depends(get_db)):
 async def admin_dashboard(db: Session = Depends(get_db)):
     rsvps = db.query(RSVP).all()
     return rsvps
-
