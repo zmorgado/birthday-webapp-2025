@@ -28,10 +28,15 @@
       async function fetchRSVPs() {
         const tableBody = document.querySelector('#rsvp-table tbody');
         tableBody.innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
+
+        const password = prompt("Enter admin password:");
+        const credentials = btoa(`admin:${password}`);
+
         try {
           const response = await fetch(`${API_BASE_URL}/admin`, {
-            headers: { 'Authorization': 'Basic ' + btoa('admin:yourpassword') }
+            headers: { 'Authorization': `Basic ${credentials}` }
           });
+
           if (response.ok) {
             const rsvps = await response.json();
             tableBody.innerHTML = '';
