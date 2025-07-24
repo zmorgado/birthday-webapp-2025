@@ -2,11 +2,16 @@ from fastapi import FastAPI, Depends, HTTPException
 from fastapi.concurrency import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from models import init_db, RSVP, SessionLocal
-from config import Config
 from pydantic import BaseModel, Field
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from typing import List
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from backend.models import init_db, RSVP, SessionLocal
+from config import Config
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
