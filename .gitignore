@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Environment
+.env
+
+# Database
+*.sqlite3
+*.db
+
+# VSCode
+.vscode/
+
+# Byte-compiled / cache / logs
+*.log
+
+# Ignore test scripts
+/tests/delete_rsvp_rows.py
+/tests/insert_rsvp_rows.py
+/tests/retrieve_data.py
