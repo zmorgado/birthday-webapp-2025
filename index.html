@@ -25,7 +25,7 @@
         e.preventDefault();
         const name = document.getElementById('name').value;
         const attendance = document.getElementById('attendance').value;
-        const response = await fetch('https://birthday-webapp-production.up.railway.app/rsvp', {
+        const response = await fetch('https://birthday-webapp-2025-backend-production.up.railway.app/rsvp', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, dinner_confirmed: attendance === 'dinner' || attendance === 'both', party_confirmed: attendance === 'party' || attendance === 'both' })

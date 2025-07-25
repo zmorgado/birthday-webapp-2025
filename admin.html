@@ -8,7 +8,10 @@
 </head>
 <body class="min-h-screen flex items-center justify-center px-4 py-10 bg-black/70 bg-blend-darken">
   <div class="w-full max-w-4xl bg-[#002b6c]/90 backdrop-blur-xl rounded-2xl shadow-2xl p-6 text-white overflow-x-auto">
-    <h1 class="text-4xl font-extrabold text-center text-white">Escritorio</h1>
+    <div class="text-center mb-6">
+      <img src="static/img/bombonera.jpg" alt="Bombonera" class="w-32 h-32 mx-auto mb-4 rounded-full shadow-lg object-cover">
+      <h1 class="text-4xl font-extrabold text-white">Escritorio</h1>
+    </div>
     <table id="rsvp-table" class="w-full table-auto border-collapse text-lg mt-6">
       <thead>
         <tr class="bg-yellow-400 text-[#002b6c] uppercase text-sm font-bold">
@@ -23,7 +26,7 @@
     </table>
     <button id="reload-button" class="mt-4 bg-yellow-400 text-[#002b6c] py-2 px-4 rounded">Reload</button>
     <script>
-      const API_BASE_URL = "https://birthday-webapp-production.up.railway.app";
+      const API_BASE_URL = "https://birthday-webapp-2025-backend-production.up.railway.app";
 
       async function fetchRSVPs() {
         const tableBody = document.querySelector('#rsvp-table tbody');

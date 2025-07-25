@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "https://birthday-webapp-2025-backend-production.up.railway.app/$1" }
+  ]
+}
