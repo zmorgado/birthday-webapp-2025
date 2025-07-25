@@ -6,10 +6,10 @@
   <title>Panel de Administración</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen flex items-center justify-center px-4 py-10 bg-black/70 bg-blend-darken">
-  <div class="w-full max-w-4xl bg-[#002b6c]/90 backdrop-blur-xl rounded-2xl shadow-2xl p-6 text-white overflow-x-auto">
+<body class="min-h-screen flex items-center justify-center px-4 py-10 relative" style="background-image: url('/static/img/bombonera.jpg'); background-size: cover; background-position: center;">
+  <div class="absolute inset-0 bg-black/70 z-0"></div>
+  <div class="w-full max-w-4xl rounded-2xl shadow-2xl p-6 text-white overflow-x-auto relative bg-[#002b6c]/90 backdrop-blur-xl z-10">
     <div class="text-center mb-6">
-      <img src="static/img/bombonera.jpg" alt="Bombonera" class="w-32 h-32 mx-auto mb-4 rounded-full shadow-lg object-cover">
       <h1 class="text-4xl font-extrabold text-white">Escritorio</h1>
     </div>
     <table id="rsvp-table" class="w-full table-auto border-collapse text-lg mt-6">
