@@ -10,7 +10,7 @@ import os
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from backend.models import init_db, RSVP, SessionLocal
+from models import init_db, RSVP, SessionLocal
 from config import Config
 
 @asynccontextmanager
@@ -23,7 +23,7 @@ app = FastAPI(lifespan=lifespan)
 
 # Add CORS middleware
 origins = [
-    "https://cumplepelusa.vercel.app",  # Replace with your Vercel domain
+    "https://cumplepelusa.vercel.app",
 ]
 app.add_middleware(
     CORSMiddleware,
