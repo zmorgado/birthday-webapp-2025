@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,34 +6,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panel de Administración</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      background-image: url('/static/img/bombonera.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+    @media (max-width: 768px) {
+      body {
+        background-attachment: scroll;
+        background-position: top;
+      }
+    }
+  </style>
 </head>
-<body class="min-h-screen flex items-center justify-center px-4 py-10 relative" style="background-image: url('/static/img/bombonera.jpg'); background-size: cover; background-position: center;">
-  <div class="absolute inset-0 bg-black/70 z-0"></div>
-  <div class="w-full max-w-4xl rounded-2xl shadow-2xl p-6 text-white overflow-x-auto relative bg-[#002b6c]/90 backdrop-blur-xl z-10">
-    <div class="text-center mb-6">
-      <h1 class="text-4xl font-extrabold text-white">Escritorio</h1>
+<body class="min-h-screen flex items-center justify-center px-4 py-10 bg-black/70 bg-blend-darken">
+  <div class="w-full max-w-4xl bg-[#002b6c]/90 backdrop-blur-xl rounded-2xl shadow-2xl p-6 text-white overflow-x-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-4xl font-extrabold text-center text-white">Escritorio</h1>
+      <div class="text-right">
+        <p id="dinner-total" class="text-2xl font-bold text-yellow-400">Cena: <span>0</span></p>
+        <p id="party-total" class="text-2xl font-bold text-yellow-400">Fiesta: <span>0</span></p>
+      </div>
     </div>
-    <table id="rsvp-table" class="w-full table-auto border-collapse text-lg mt-6">
+    <p class="text-lg text-center text-white/80 mb-4">Lista de personas confirmadas para la cena y/o la fiesta.</p>
+    <table id="rsvp-table" class="w-full table-auto border-collapse text-lg">
       <thead>
         <tr class="bg-yellow-400 text-[#002b6c] uppercase text-sm font-bold">
-          <th class="px-4 py-2">Nombre</th>
-          <th class="px-4 py-2">Cena</th>
-          <th class="px-4 py-2">Fiesta</th>
-          <th class="px-4 py-2">Timestamp</th>
+          <th class="px-4 py-3 text-left">Nombre</th>
+          <th class="px-4 py-3 text-left">Fecha</th>
+          <th class="px-4 py-3 text-left">Cena</th>
+          <th class="px-4 py-3 text-left">Fiesta</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-white/20">
       </tbody>
     </table>
-    <button id="reload-button" class="mt-4 bg-yellow-400 text-[#002b6c] py-2 px-4 rounded">Reload</button>
+    <button id="reload-button" class="mt-4 bg-yellow-400 text-[#002b6c] py-2 px-4 rounded">Recargar</button>
     <script>
       const API_BASE_URL = "https://birthday-webapp-2025-backend-production.up.railway.app";
 
       async function fetchRSVPs() {
         const tableBody = document.querySelector('#rsvp-table tbody');
-        tableBody.innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="4">Cargando...</td></tr>';
 
-        const password = prompt("Enter admin password:");
+        const password = prompt("Ingrese la contraseña de administrador:");
         const credentials = btoa(`admin:${password}`);
 
         try {
@@ -43,23 +64,31 @@
           if (response.ok) {
             const rsvps = await response.json();
             tableBody.innerHTML = '';
-            rsvps.forEach(rsvp => {
+            let dinnerTotal = 0;
+            let partyTotal = 0;
+            // Reverse to match old dashboard order
+            rsvps.slice().reverse().forEach(rsvp => {
+              if (rsvp.dinner_confirmed) dinnerTotal++;
+              if (rsvp.party_confirmed) partyTotal++;
               const row = document.createElement('tr');
+              row.className = "hover:bg-white/10 transition";
               row.innerHTML = `
-                <td class="px-4 py-2">${rsvp.name}</td>
-                <td class="px-4 py-2">${rsvp.dinner_confirmed ? 'Sí' : 'No'}</td>
-                <td class="px-4 py-2">${rsvp.party_confirmed ? 'Sí' : 'No'}</td>
-                <td class="px-4 py-2">${new Date(rsvp.timestamp).toLocaleString()}</td>
+                <td class="px-4 py-3">${rsvp.name}</td>
+                <td class="px-4 py-3">${new Date(rsvp.timestamp).toLocaleString()}</td>
+                <td class="px-4 py-3">${rsvp.dinner_confirmed ? '<span class=\'text-green-400 font-semibold\'>Sí</span>' : '<span class=\'text-red-400 font-semibold\'>No</span>'}</td>
+                <td class="px-4 py-3">${rsvp.party_confirmed ? '<span class=\'text-green-400 font-semibold\'>Sí</span>' : '<span class=\'text-red-400 font-semibold\'>No</span>'}</td>
               `;
               tableBody.appendChild(row);
             });
+            document.querySelector('#dinner-total span').textContent = dinnerTotal;
+            document.querySelector('#party-total span').textContent = partyTotal;
           } else if (response.status === 401) {
-            tableBody.innerHTML = '<tr><td colspan="4">Unauthorized: Please check your credentials.</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="4">No autorizado: Verifique sus credenciales.</td></tr>';
           } else {
-            tableBody.innerHTML = '<tr><td colspan="4">Error loading data.</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="4">Error al cargar los datos.</td></tr>';
           }
         } catch (error) {
-          tableBody.innerHTML = '<tr><td colspan="4">Network error. Please try again later.</td></tr>';
+          tableBody.innerHTML = '<tr><td colspan="4">Error de red. Intente nuevamente más tarde.</td></tr>';
         }
       }
 
