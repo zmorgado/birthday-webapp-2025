@@ -39,40 +39,8 @@
   <div class="w-full max-w-md bg-[#002b6c]/90 backdrop-blur-xl rounded-2xl shadow-xl p-8 space-y-6 text-white">
     <h1 class="text-4xl font-extrabold text-white text-center">2/8 💙💛💙</h1>
     <p class="text-center text-sm text-white/80">Confirmá asistencia a la cena, la fiesta o ambas</p>
-    <form id="rsvp-form" class="space-y-4">
-      <div class="mb-4">
-        <label for="name" class="block text-sm font-semibold text-white">Nombre (o apodo)</label>
-        <input type="text" id="name" name="name"
-               class="mt-1 w-full rounded-md border border-yellow-400 bg-transparent text-white placeholder-white/70 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-300" placeholder="Ej: Juan Román" required />
-      </div>
-      <div class="mb-4">
-        <label for="attendance" class="block text-sm font-semibold text-white">¿A qué venis?</label>
-        <select id="attendance" name="attendance"
-                class="mt-1 w-full rounded-md border border-yellow-400 bg-transparent text-white p-2 focus:outline-none focus:ring-2 focus:ring-yellow-300">
-          <option value="">Elegí una opción</option>
-          <option value="both">A ambas</option>
-          <option value="dinner">Solo a la cena</option>
-          <option value="party">Solo a la fiesta</option>
-          <option value="none">A ninguna</option>
-        </select>
-      </div>
-      <div id="error-message" class="text-red-400 text-sm mb-2" style="display:none;"></div>
-      <button type="submit"
-              class="w-full bg-yellow-400 text-[#002b6c] font-bold py-2 px-4 rounded-md hover:bg-yellow-300 transition-all">
-        Confirmar asistencia
-      </button>
-    </form>
-    <!-- Embedded Maps Section -->
-    <div class="space-y-6 mt-8">
 
-    </div>
-    <div id="confirmation-message" style="display: none;" class="mt-6 text-center">
-      <div class="bg-yellow-400/90 text-[#002b6c] border-2 border-white p-5 rounded-xl shadow-xl space-y-2">
-        <p class="text-sm font-medium">¡Gracias por confirmar! Nos vemos el 2/8 💥💙💛</p>
-      </div>
-    </div>
     <section class="venue-info mt-8 info-section">
-      <h2 class="text-xl font-bold mb-4">Info</h2>
       <div class="dinner-info mb-6">
           <h3 class="text-lg font-semibold">Cena</h3>
           <p class="text-sm">Hora: <strong>21:00</strong></p>
@@ -91,11 +59,12 @@
         </div>
       </div>
       <div class="party-info">
-          <h3 class="text-lg font-semibold">Pary (Polenta Polenta)</h3>
+          <h3 class="text-lg font-semibold">Pary (Polenta Polenta)</h3>          
           <p class="text-sm">Hora: <strong>Alrededor de la 1 post cena</strong></p>
           <p class="text-sm">Precio: <strong>Aprox 15k</strong></p>
           <p class="text-sm">Entradas: <strong>Una vez que confirmen quienes vienen, yo compro y despues me pasan a mi asi pegamos descuento</strong></p>
-         <div class="bg-white/10 backdrop-blur-sm rounded-xl shadow-lg p-4 flex flex-col">
+          <p class="text-sm text-red-500 font-semibold mb-2">es cachenge</p>
+          <div class="bg-white/10 backdrop-blur-sm rounded-xl shadow-lg p-4 flex flex-col">
            <h3 class="text-base font-bold mb-2 text-yellow-300 text-left">📍 Deseo</h3>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5344.54246142355!2d-58.473201735156564!3d-34.5848331331404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb7ed60d170b9%3A0x211107b16a646c97!2sDESEO%20CLUB!5e0!3m2!1ses!2sar!4v1753711346432!5m2!1ses!2sar"
@@ -137,6 +106,34 @@
         }
       });
     </script>
+        <form id="rsvp-form" class="space-y-4">
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-semibold text-white">Nombre (o apodo)</label>
+        <input type="text" id="name" name="name"
+               class="mt-1 w-full rounded-md border border-yellow-400 bg-transparent text-white placeholder-white/70 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-300" placeholder="Ej: Juan Román" required />
+      </div>
+      <div class="mb-4">
+        <label for="attendance" class="block text-sm font-semibold text-white">¿A qué venis?</label>
+        <select id="attendance" name="attendance"
+                class="mt-1 w-full rounded-md border border-yellow-400 bg-transparent text-white p-2 focus:outline-none focus:ring-2 focus:ring-yellow-300">
+          <option value="">Elegí una opción</option>
+          <option value="both">A ambas</option>
+          <option value="dinner">Solo a la cena</option>
+          <option value="party">Solo a la fiesta</option>
+          <option value="none">A ninguna</option>
+        </select>
+      </div>
+      <div id="error-message" class="text-red-400 text-sm mb-2" style="display:none;"></div>
+      <button type="submit"
+              class="w-full bg-yellow-400 text-[#002b6c] font-bold py-2 px-4 rounded-md hover:bg-yellow-300 transition-all">
+        Confirmar asistencia
+      </button>
+    </form>
+    <div id="confirmation-message" style="display: none;" class="mt-6 text-center">
+      <div class="bg-yellow-400/90 text-[#002b6c] border-2 border-white p-5 rounded-xl shadow-xl space-y-2">
+        <p class="text-sm font-medium">¡Gracias por confirmar! Nos vemos el 2/8 💥💙💛</p>
+      </div>
+    </div>
   </div>
 </body>
 </html>
