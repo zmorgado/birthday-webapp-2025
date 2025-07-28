@@ -50,10 +50,10 @@
         <select id="attendance" name="attendance"
                 class="mt-1 w-full rounded-md border border-yellow-400 bg-transparent text-white p-2 focus:outline-none focus:ring-2 focus:ring-yellow-300">
           <option value="">Elegí una opción</option>
-          <option value="both">A ambas 🍽️🎉</option>
-          <option value="dinner">Solo a la cena 🍽️</option>
-          <option value="party">Solo a la fiesta 🎉</option>
-          <option value="none">A ninguna 😔</option>
+          <option value="both">A ambas</option>
+          <option value="dinner">Solo a la cena</option>
+          <option value="party">Solo a la fiesta</option>
+          <option value="none">A ninguna</option>
         </select>
       </div>
       <div id="error-message" class="text-red-400 text-sm mb-2" style="display:none;"></div>
@@ -74,10 +74,10 @@
     <section class="venue-info mt-8 info-section">
       <h2 class="text-xl font-bold mb-4">Info</h2>
       <div class="dinner-info mb-6">
-          <h3 class="text-lg font-semibold">Cena en la terraza (techada) de Cadillac</h3>
+          <h3 class="text-lg font-semibold">Cena</h3>
           <p class="text-sm">Hora: <strong>21:00</strong></p>
          <div class="bg-white/10 backdrop-blur-sm rounded-xl shadow-lg p-4 flex flex-col">
-           <h3 class="text-base font-bold mb-2 text-yellow-300 text-left">📍 Cena</h3>
+           <h3 class="text-base font-bold mb-2 text-yellow-300 text-left">📍 Cadillac</h3>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3286.0266447445297!2d-58.46048952388051!3d-34.55288075481582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb42930b17ac5%3A0x4f926af97bca8f4e!2sVicente%20Cadillach%20Cervecer%C3%ADa!5e0!3m2!1ses!2sar!4v1753711579564!5m2!1ses!2sar"
             width="100%"
@@ -91,10 +91,12 @@
         </div>
       </div>
       <div class="party-info">
-          <h3 class="text-lg font-semibold">Pary</h3>
+          <h3 class="text-lg font-semibold">Pary (Polenta Polenta)</h3>
           <p class="text-sm">Hora: <strong>Alrededor de la 1 post cena</strong></p>
+          <p class="text-sm">Precio: <strong>Aprox 15k</strong></p>
+          <p class="text-sm">Entradas: <strong>Una vez que confirmen quienes vienen, yo compro y despues me pasan a mi asi pegamos descuento</strong></p>
          <div class="bg-white/10 backdrop-blur-sm rounded-xl shadow-lg p-4 flex flex-col">
-           <h3 class="text-base font-bold mb-2 text-yellow-300 text-left">🎉 Ubicación</h3>
+           <h3 class="text-base font-bold mb-2 text-yellow-300 text-left">📍 Deseo</h3>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5344.54246142355!2d-58.473201735156564!3d-34.5848331331404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb7ed60d170b9%3A0x211107b16a646c97!2sDESEO%20CLUB!5e0!3m2!1ses!2sar!4v1753711346432!5m2!1ses!2sar"
             width="100%"
@@ -107,13 +109,6 @@
           ></iframe>
           </div>
       </div>
-    </section>
-    <section class="party-ticket mt-8">
-      <h3 class="text-sm font-semibold mb-2">Si te sumas, te dejo el link para comprar la entrada:</h3>
-      <a href="https://venti.com.ar/evento/polenta"
-         class="inline-block bg-yellow-400 text-[#002b6c] font-bold py-2 px-5 rounded-full hover:bg-yellow-300 transition-all shadow-lg">
-        🎟️ Polenta Polenta 🎟️
-      </a>
     </section>
     <script>
       document.getElementById('rsvp-form').addEventListener('submit', async (e) => {
