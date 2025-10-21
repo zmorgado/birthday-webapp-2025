@@ -124,7 +124,7 @@
           errorMessage.style.display = 'none';
         }
         try {
-          const response = await fetch('https://estesi-production.up.railway.app/rsvp', {
+          const response = await fetch('http://52.91.145.176:8000/rsvp', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, dinner_confirmed: attendance === 'dinner' || attendance === 'both', party_confirmed: attendance === 'party' || attendance === 'both' })
