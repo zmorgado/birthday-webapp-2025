@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "http://52.91.145.176:8000/$1" },
+    { "source": "/api/(.*)", "destination": "https://pelusa-backend.sytes.net/$1" },
     { "source": "/admin", "destination": "/admin.html" }
   ]
 }
