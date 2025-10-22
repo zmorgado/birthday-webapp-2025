@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://pelusa-backend.sytes.net/$1" },
+    { "source": "/api/(.*)", "destination": "https://birthday-app.t948px0xa6b3m.us-east-1.cs.amazonlightsail.com/$1" },
     { "source": "/admin", "destination": "/admin.html" }
   ]
 }

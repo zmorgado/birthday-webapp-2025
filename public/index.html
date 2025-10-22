@@ -124,7 +124,7 @@
           errorMessage.style.display = 'none';
         }
         try {
-          const response = await fetch('https://pelusa-backend.sytes.net/rsvp', {
+          const response = await fetch('https://birthday-app.t948px0xa6b3m.us-east-1.cs.amazonlightsail.com/rsvp', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, dinner_confirmed: attendance === 'dinner' || attendance === 'both', party_confirmed: attendance === 'party' || attendance === 'both' })
