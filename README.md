@@ -1,6 +1,6 @@
 # Birthday Invitation Web App
 
-Este proyecto es una aplicación web para gestionar invitaciones de cumpleaños. Está desarrollado con FastAPI y diseñado para ser desplegado en Render.com.
+Este proyecto es el frontend de una aplicación web para gestionar invitaciones de cumpleaños actualmente hosteada en Vercel. 
 
 ## Características
 - Confirmación de asistencia a la cena.
@@ -11,14 +11,3 @@ Este proyecto es una aplicación web para gestionar invitaciones de cumpleaños.
 - **Backend**: FastAPI
 - **Frontend**: Jinja2, Tailwind CSS, Alpine.js
 - **Base de datos**: SQLite
-
-## Instrucciones de despliegue
-1. Instalar las dependencias:
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. Ejecutar la aplicación localmente:
-   ```bash
-   uvicorn main:app --reload
-   ```
-3. Desplegar en Render.com utilizando el archivo `render.yaml`.
